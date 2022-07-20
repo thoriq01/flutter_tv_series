@@ -267,6 +267,7 @@ class MovieListCard extends StatelessWidget {
       height: height,
       child: ListView.builder(
         scrollDirection: direction,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: length,
         itemBuilder: (context, index) {
           return GestureDetector(

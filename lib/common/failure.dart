@@ -24,3 +24,7 @@ class DatabaseException implements Exception {
 
   DatabaseException(this.message);
 }
+
+class DatabaseFailure extends Failure {
+  DatabaseFailure(String message) : super(message);
+}

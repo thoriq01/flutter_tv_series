@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "dicoding_tv_series (profile mode)",
             "request": "launch",
@@ -16,6 +17,11 @@
             "type": "dart",
             "flutterMode": "release"
         },
-      
+        {
+            "name": "dicoding_tv_series (debug mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug"
+        },
     ]
 }

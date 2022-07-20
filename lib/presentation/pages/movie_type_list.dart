@@ -78,11 +78,10 @@ class _MovieTypeListPageState extends State<MovieTypeListPage> {
                 }
               });
             } else {
-              return BlocConsumer<MovieWathclistBloc, MovieWathclistState>(
-                listener: (context, state) {},
+              return BlocBuilder<MovieWathclistBloc, MovieWathclistState>(
                 builder: (context, state) {
                   if (state is MovieWatchlistLoading) {
-                    return Container();
+                    return CircularProgressIndicator();
                   } else if (state is MovieWatchlistError) {
                     return Center(
                       child: Text(state.message),

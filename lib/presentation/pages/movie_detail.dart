@@ -36,9 +36,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
               BlocBuilder<MovieDetailBloc, MovieDetailState>(
                 builder: (context, state) {
                   if (state is MovieDetailLoading) {
-                    return Center(
-                      child: CircularProgressIndicator(color: Colors.white),
-                    );
+                    return MovieLoadingData();
                   } else if (state is MovieDetailLoaded) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -237,6 +235,19 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
           child: Text(text, style: TextStyle(color: Colors.black)),
         ),
       ),
+    );
+  }
+}
+
+class MovieLoadingData extends StatelessWidget {
+  const MovieLoadingData({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: CircularProgressIndicator(color: Colors.white),
     );
   }
 }
