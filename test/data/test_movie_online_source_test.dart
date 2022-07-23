@@ -115,4 +115,18 @@ void main() {
       expect(() => call, throwsA(isA<ServerException>()));
     });
   });
+
+  group('now playing movies', () {
+    final tSearchResult = MovieResponse.fromJson(json.decode(readJson('dummy_data/now_playing.json'))).movieList;
+
+    test('should return list of movies when response code is 200', () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse("$BASE_URL/movie/now_playing?$API_KEY")))
+          .thenAnswer((_) async => http.Response(readJson('dummy_data/now_playing.json'), 200));
+      // act
+      final result = await dataSource.getNowPlayingMovies();
+      // assert
+      expect(result, tSearchResult);
+    });
+  });
 }

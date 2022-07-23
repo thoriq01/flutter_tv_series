@@ -30,8 +30,6 @@ class MovieWathclistBloc extends Bloc<MovieWathclistEvent, MovieWathclistState> 
   }
 
   _addToWatchlist(AddMovieWatchlist event, Emitter<MovieWathclistState> emit) async {
-    final update = await _getData();
-
     emit(MovieWatchlistLoading());
     final result = await _watchListsMovie.saveWatchlist(event.movie);
     result.fold((l) {
@@ -39,7 +37,6 @@ class MovieWathclistBloc extends Bloc<MovieWathclistEvent, MovieWathclistState> 
     }, (r) {
       emit(MovieWatchlistSuccessAdd(r));
       emit(MovieWatchlistIsAdded());
-      update.fold((l) => emit(MovieWatchlistError(l.toString())), (br) => emit(MovieWatchlistLoaded(br)));
     });
   }
 
@@ -60,6 +57,9 @@ class MovieWathclistBloc extends Bloc<MovieWathclistEvent, MovieWathclistState> 
 
   _isAddedWatchList(CheckIsAddedMovieWatchlist event, Emitter<MovieWathclistState> emit) async {
     final result = await _watchListsMovie.isAddWatchlist(event.id);
+    final update = await _getData();
+    update.fold((l) => emit(MovieWatchlistError(l.toString())), (br) => emit(MovieWatchlistLoaded(br)));
+
     if (result) {
       emit(MovieWatchlistIsAdded());
     } else {

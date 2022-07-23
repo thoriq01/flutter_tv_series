@@ -1,21 +1,14 @@
-import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dicoding_tv_series/common/failure.dart';
 import 'package:dicoding_tv_series/domain/entities/movie.dart';
-import 'package:dicoding_tv_series/domain/repositories/movie_repositorie.dart';
 import 'package:dicoding_tv_series/domain/usecase/get_popular_movie.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_popular_bloc/movie_popular_bloc_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import '../../dummy_data/dummy_objects.dart';
-import 'get_popular_movies_bloc.mocks.dart';
-
-class _BlocGetPopularMovies extends MockBloc<MoviePopularBlocEvent, MoviePopularBlocState> implements MoviePopularBlocBloc {}
 
 class _MockGetPopularMovie extends Mock implements GetPopularMovie {}
-
-class _MockRepository extends Mock implements MovieRepository {}
 
 @GenerateMocks([GetPopularMovie])
 void main() {

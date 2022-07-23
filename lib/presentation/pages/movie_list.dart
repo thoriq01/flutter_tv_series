@@ -1,6 +1,7 @@
 import 'package:dicoding_tv_series/config/router/movie_route_name.dart';
 import 'package:dicoding_tv_series/config/router/movie_router.dart';
 import 'package:dicoding_tv_series/domain/entities/movie.dart';
+import 'package:dicoding_tv_series/presentation/bloc/movie_now_playing_bloc/movie_now_playing_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_popular_bloc/movie_popular_bloc_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_search_bloc/movie_search_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_top_rated_bloc/movie_top_rated_bloc.dart';
@@ -26,6 +27,7 @@ class _MovieListPageState extends State<MovieListPage> {
     context.read<MovieTopRatedBloc>().add(LoadMovieTopRated());
     context.read<MovieSearchBloc>().add(RemoveSearchMovieEvent());
     context.read<MovieWathclistBloc>().add(LoadMovieWatchlist());
+    context.read<MovieNowPlayingBloc>().add(LoadMovieNowPlaying());
   }
 
   @override
@@ -163,8 +165,9 @@ class _MovieListPageState extends State<MovieListPage> {
                                             Navigator.pushNamed(context, movieTypeListPage, arguments: ListTypeMovieArgument("watchlist"));
                                           }),
                                       MovieListCard(
-                                        length: 2,
+                                        length: state.movies.length,
                                         isWatchlist: true,
+                                        isScrollable: true,
                                         height: 300,
                                         movies: state.movies,
                                         direction: Axis.horizontal,
@@ -181,10 +184,43 @@ class _MovieListPageState extends State<MovieListPage> {
                           },
                         ),
                         TitleContent(
-                            text: "Popular",
-                            onPressed: () {
-                              Navigator.pushNamed(context, movieTypeListPage, arguments: ListTypeMovieArgument("popular"));
-                            }),
+                          text: "Now Playing",
+                          onPressed: () {
+                            Navigator.pushNamed(context, movieTypeListPage, arguments: ListTypeMovieArgument("nowplaying"));
+                          },
+                        ),
+                        BlocBuilder<MovieNowPlayingBloc, MovieNowPlayingState>(
+                          builder: (context, state) {
+                            if (state is MovienowPlayingLoading) {
+                              return Container();
+                            } else if (state is MovieNowPlayingError) {
+                              return Center(
+                                child: Text(state.message),
+                              );
+                            } else if (state is MovieNowPlayingLoaded) {
+                              if (state.movies.length > 0) {
+                                return MovieListCard(
+                                  length: 2,
+                                  isWatchlist: false,
+                                  height: 500,
+                                  movies: state.movies,
+                                  isScrollable: false,
+                                  direction: Axis.vertical,
+                                );
+                              } else {
+                                return Container();
+                              }
+                            } else {
+                              return Container();
+                            }
+                          },
+                        ),
+                        TitleContent(
+                          text: "Popular",
+                          onPressed: () {
+                            Navigator.pushNamed(context, movieTypeListPage, arguments: ListTypeMovieArgument("popular"));
+                          },
+                        ),
                         BlocBuilder<MoviePopularBlocBloc, MoviePopularBlocState>(builder: (context, state) {
                           if (state is MoviePopularLoaded) {
                             return MovieListCard(
@@ -249,6 +285,7 @@ class _MovieListPageState extends State<MovieListPage> {
 class MovieListCard extends StatelessWidget {
   final int length;
   final List<Movie> movies;
+  final bool isScrollable;
   final Axis direction;
   final double height;
   final bool isWatchlist;
@@ -259,6 +296,7 @@ class MovieListCard extends StatelessWidget {
     required this.movies,
     required this.height,
     required this.isWatchlist,
+    this.isScrollable = false,
   }) : super(key: key);
 
   @override
@@ -267,7 +305,7 @@ class MovieListCard extends StatelessWidget {
       height: height,
       child: ListView.builder(
         scrollDirection: direction,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: isScrollable == false ? NeverScrollableScrollPhysics() : BouncingScrollPhysics(),
         itemCount: length,
         itemBuilder: (context, index) {
           return GestureDetector(

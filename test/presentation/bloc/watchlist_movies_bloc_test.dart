@@ -1,9 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dicoding_tv_series/common/failure.dart';
-import 'package:dicoding_tv_series/domain/usecase/get_detail_movie.dart';
 import 'package:dicoding_tv_series/domain/usecase/watchlist_movie.dart';
-import 'package:dicoding_tv_series/presentation/bloc/movie_detail_bloc/movie_detail_bloc.dart';
-import 'package:dicoding_tv_series/presentation/bloc/movie_top_rated_bloc/movie_top_rated_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_watchlist_bloc/movie_wathclist_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

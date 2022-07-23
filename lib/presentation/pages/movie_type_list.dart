@@ -1,3 +1,4 @@
+import 'package:dicoding_tv_series/presentation/bloc/movie_now_playing_bloc/movie_now_playing_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_popular_bloc/movie_popular_bloc_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_top_rated_bloc/movie_top_rated_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_watchlist_bloc/movie_wathclist_bloc.dart';
@@ -21,8 +22,10 @@ class _MovieTypeListPageState extends State<MovieTypeListPage> {
       context.read<MoviePopularBlocBloc>().add(LoadPopularMovie());
     } else if (this.widget.category == "topmovie") {
       context.read<MovieTopRatedBloc>().add(LoadMovieTopRated());
-    } else {
+    } else if (this.widget.category == "watchlist") {
       context.read<MovieWathclistBloc>().add(LoadMovieWatchlist());
+    } else {
+      context.read<MovieNowPlayingBloc>().add(LoadMovieNowPlaying());
     }
   }
 
@@ -44,6 +47,7 @@ class _MovieTypeListPageState extends State<MovieTypeListPage> {
                     length: state.movies.length,
                     isWatchlist: false,
                     height: double.infinity,
+                    isScrollable: true,
                     movies: state.movies,
                     direction: Axis.vertical,
                   );
@@ -64,6 +68,7 @@ class _MovieTypeListPageState extends State<MovieTypeListPage> {
                     length: state.movies.length,
                     height: MediaQuery.of(context).size.width * 100,
                     isWatchlist: false,
+                    isScrollable: true,
                     movies: state.movies,
                     direction: Axis.vertical,
                   );
@@ -77,7 +82,7 @@ class _MovieTypeListPageState extends State<MovieTypeListPage> {
                   );
                 }
               });
-            } else {
+            } else if (this.widget.category == "watchlist") {
               return BlocBuilder<MovieWathclistBloc, MovieWathclistState>(
                 builder: (context, state) {
                   if (state is MovieWatchlistLoading) {
@@ -92,7 +97,37 @@ class _MovieTypeListPageState extends State<MovieTypeListPage> {
                         child: MovieListCard(
                           length: state.movies.length,
                           isWatchlist: false,
+                          isScrollable: true,
                           height: MediaQuery.of(context).size.height,
+                          movies: state.movies,
+                          direction: Axis.vertical,
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  } else {
+                    return Container();
+                  }
+                },
+              );
+            } else {
+              return BlocBuilder<MovieNowPlayingBloc, MovieNowPlayingState>(
+                builder: (context, state) {
+                  if (state is MovienowPlayingLoading) {
+                    return CircularProgressIndicator();
+                  } else if (state is MovieNowPlayingError) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  } else if (state is MovieNowPlayingLoaded) {
+                    if (state.movies.length > 0) {
+                      return Container(
+                        child: MovieListCard(
+                          length: state.movies.length,
+                          isWatchlist: false,
+                          height: MediaQuery.of(context).size.height,
+                          isScrollable: true,
                           movies: state.movies,
                           direction: Axis.vertical,
                         ),
@@ -123,9 +158,14 @@ class _MovieTypeListPageState extends State<MovieTypeListPage> {
         "Popular",
         style: TextStyle(fontSize: 20, color: Colors.white),
       );
-    } else {
+    } else if (this.widget.category == "watchlist") {
       return Text(
         "Watchlist",
+        style: TextStyle(fontSize: 20, color: Colors.white),
+      );
+    } else {
+      return Text(
+        "Now Playing",
         style: TextStyle(fontSize: 20, color: Colors.white),
       );
     }

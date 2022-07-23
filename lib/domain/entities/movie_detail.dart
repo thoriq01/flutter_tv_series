@@ -1,5 +1,4 @@
 import 'package:dicoding_tv_series/domain/entities/genre.dart';
-import 'package:dicoding_tv_series/domain/entities/movie.dart';
 import 'package:equatable/equatable.dart';
 
 class MovieDetail extends Equatable {

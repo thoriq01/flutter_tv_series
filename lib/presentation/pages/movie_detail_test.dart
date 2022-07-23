@@ -1,9 +1,7 @@
 import 'package:dicoding_tv_series/domain/entities/movie_detail.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_detail_bloc/movie_detail_bloc.dart';
-import 'package:dicoding_tv_series/presentation/bloc/movie_watchlist_bloc/movie_wathclist_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dicoding_tv_series/injector.dart' as sl;
 
 class MovieDetailPages extends StatefulWidget {
   final MovieDetail? id;

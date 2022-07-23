@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:dicoding_tv_series/domain/entities/movie.dart';
-import 'package:dicoding_tv_series/domain/usecase/search_movie.dart';
 import 'package:dicoding_tv_series/domain/usecase/watchlist_movie.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -38,6 +37,4 @@ void main() {
     final result = await watchListsMovie.deleteWatchlist(testMovieDetail);
     expect(result, Right(remove));
   });
-
-  
 }

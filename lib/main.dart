@@ -1,7 +1,9 @@
 import 'package:dicoding_tv_series/config/router/movie_router.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_cast_bloc/movie_cast_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_detail_bloc/movie_detail_bloc.dart';
+import 'package:dicoding_tv_series/presentation/bloc/movie_now_playing_bloc/movie_now_playing_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_popular_bloc/movie_popular_bloc_bloc.dart';
+import 'package:dicoding_tv_series/presentation/bloc/movie_recomendation_bloc/movie_recomendation_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_search_bloc/movie_search_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_top_rated_bloc/movie_top_rated_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_watchlist_bloc/movie_wathclist_bloc.dart';
@@ -37,6 +39,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<MovieWathclistBloc>(
           create: (context) => dl.sl<MovieWathclistBloc>(),
+        ),
+        BlocProvider<MovieRecomendationBloc>(
+          create: (context) => dl.sl<MovieRecomendationBloc>(),
+        ),
+        BlocProvider<MovieNowPlayingBloc>(
+          create: (context) => dl.sl<MovieNowPlayingBloc>(),
         ),
       ],
       child: MaterialApp(

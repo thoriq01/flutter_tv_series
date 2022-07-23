@@ -5,7 +5,6 @@ import 'package:dicoding_tv_series/domain/usecase/watchlist_movie.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_popular_bloc/movie_popular_bloc_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_top_rated_bloc/movie_top_rated_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_watchlist_bloc/movie_wathclist_bloc.dart';
-import 'package:dicoding_tv_series/presentation/pages/movie_list.dart';
 import 'package:dicoding_tv_series/presentation/pages/movie_type_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

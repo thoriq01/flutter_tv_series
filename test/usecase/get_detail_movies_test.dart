@@ -1,8 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dicoding_tv_series/domain/entities/movie.dart';
-import 'package:dicoding_tv_series/domain/entities/movie_detail.dart';
 import 'package:dicoding_tv_series/domain/usecase/get_detail_movie.dart';
-import 'package:dicoding_tv_series/domain/usecase/get_top_rated_movie.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

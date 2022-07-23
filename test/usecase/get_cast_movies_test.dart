@@ -1,6 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dicoding_tv_series/data/models/cast_response.dart';
-import 'package:dicoding_tv_series/data/models/movie_cast.dart';
 import 'package:dicoding_tv_series/domain/entities/cast.dart';
 import 'package:dicoding_tv_series/domain/usecase/get_cast_movie.dart';
 import 'package:flutter_test/flutter_test.dart';
