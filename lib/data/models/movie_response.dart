@@ -22,10 +22,10 @@ class MovieResponse extends Equatable {
 class MovieCastResponse extends Equatable {
   final List<MovieCast> movieCast;
 
-  MovieCastResponse(this.movieCast);
+  MovieCastResponse({required this.movieCast});
 
   factory MovieCastResponse.fromJson(Map<String, dynamic> json) => MovieCastResponse(
-        List<MovieCast>.from((json["cast"] as List).map((x) => MovieCast.fromJson(x)).where((element) => element.profilePath != null)),
+        movieCast: List<MovieCast>.from((json["cast"] as List).map((x) => MovieCast.fromJson(x)).where((element) => element.profilePath != null)),
       );
 
   Map<String, dynamic> toJson() => {

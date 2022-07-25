@@ -13,6 +13,7 @@ class MovieNowPlayingBloc extends Bloc<MovieNowPlayingEvent, MovieNowPlayingStat
   }
 
   _loadMovieNowPlaying(LoadMovieNowPlaying event, Emitter<MovieNowPlayingState> emit) async {
+    emit(MovieNowPlayingInitial());
     emit(MovienowPlayingLoading());
     final result = await getNowPlaying.execute();
     result.fold((l) => emit(MovieNowPlayingError(l.toString())), (r) => emit(MovieNowPlayingLoaded(r)));

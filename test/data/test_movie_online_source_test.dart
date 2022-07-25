@@ -129,4 +129,49 @@ void main() {
       expect(result, tSearchResult);
     });
   });
+
+  // get movie cast
+  group('get movie cast', () {
+    final tCastList = MovieCastResponse.fromJson(json.decode(readJson('dummy_data/movie_cast.json'))).movieCast;
+    final tId = 438148;
+
+    test('should return list of cast when response code is 200', () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/movie/$tId/credits?$API_KEY')))
+          .thenAnswer((_) async => http.Response(readJson('dummy_data/movie_cast.json'), 200));
+      // act
+      final result = await dataSource.getMovieCast(tId);
+      // assert
+      expect(result, tCastList);
+    });
+    test('should throw ServerException when response code is other than 200', () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/movie/$tId/credits?$API_KEY'))).thenAnswer((_) async => http.Response("Not Found", 400)); // act
+      final call = dataSource.getMovieCast(tId);
+      // assert
+      expect(() => call, throwsA(isA<ServerException>()));
+    });
+  });
+  group('get movie recomendations', () {
+    final tCastList = MovieResponse.fromJson(json.decode(readJson('dummy_data/movie_recomendations.json'))).movieList;
+    final tId = 507086;
+
+    test('should return list of cast when response code is 200', () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/movie/$tId/recommendations?$API_KEY')))
+          .thenAnswer((_) async => http.Response(readJson('dummy_data/movie_recomendations.json'), 200));
+      // act
+      final result = await dataSource.getRecomendationsMovies(tId);
+      // assert
+      expect(result, tCastList);
+    });
+    test('should throw ServerException when response code is other than 200', () async {
+      // arrange
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/movie/$tId/recommendations?$API_KEY')))
+          .thenAnswer((_) async => http.Response("Not Foynd", 400)); // act
+      final call = dataSource.getRecomendationsMovies(tId);
+      // assert
+      expect(() => call, throwsA(isA<ServerException>()));
+    });
+  });
 }

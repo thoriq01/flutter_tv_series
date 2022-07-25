@@ -13,6 +13,7 @@ class MoviePopularBlocBloc extends Bloc<MoviePopularBlocEvent, MoviePopularBlocS
   }
 
   _loadMoviePopular(LoadPopularMovie event, Emitter<MoviePopularBlocState> emit) async {
+    emit(MoviePopularBlocInitial());
     emit(MoviePopularLoading());
     final response = await getPopularMovie.execute();
     response.fold(

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
-import 'package:dicoding_tv_series/common/failure.dart';
+
 import 'package:dicoding_tv_series/domain/entities/movie.dart';
 import 'package:dicoding_tv_series/domain/entities/movie_detail.dart';
 import 'package:dicoding_tv_series/domain/usecase/watchlist_movie.dart';
@@ -30,6 +29,7 @@ class MovieWathclistBloc extends Bloc<MovieWathclistEvent, MovieWathclistState> 
   }
 
   _addToWatchlist(AddMovieWatchlist event, Emitter<MovieWathclistState> emit) async {
+    emit(MovieWathclistInitial());
     emit(MovieWatchlistLoading());
     final result = await _watchListsMovie.saveWatchlist(event.movie);
     result.fold((l) {
@@ -41,8 +41,6 @@ class MovieWathclistBloc extends Bloc<MovieWathclistEvent, MovieWathclistState> 
   }
 
   _removeFromWatchlist(RemoveMovieWatchlist event, Emitter<MovieWathclistState> emit) async {
-    final update = await _getData();
-
     emit(MovieWatchlistLoading());
     final result = await _watchListsMovie.deleteWatchlist(event.movie);
     result.fold((l) {
@@ -50,16 +48,11 @@ class MovieWathclistBloc extends Bloc<MovieWathclistEvent, MovieWathclistState> 
     }, (r) {
       emit(MovieWatchlistSuccessRemoved(r));
       emit(MovieWatchlistIsNotAdded());
-      print("update: $update");
-      update.fold((l) => emit(MovieWatchlistError(l.toString())), (br) => emit(MovieWatchlistLoaded(br)));
     });
   }
 
   _isAddedWatchList(CheckIsAddedMovieWatchlist event, Emitter<MovieWathclistState> emit) async {
     final result = await _watchListsMovie.isAddWatchlist(event.id);
-    final update = await _getData();
-    update.fold((l) => emit(MovieWatchlistError(l.toString())), (br) => emit(MovieWatchlistLoaded(br)));
-
     if (result) {
       emit(MovieWatchlistIsAdded());
     } else {
@@ -68,22 +61,13 @@ class MovieWathclistBloc extends Bloc<MovieWathclistEvent, MovieWathclistState> 
   }
 
   _deleteMovieWatchList(DeleteMovieWatchlist event, Emitter<MovieWathclistState> emit) async {
+    emit(MovieWatchlistLoading());
+
     final result = await _watchListsMovie.deleteWatchlist(event.movie);
-    final getData = await _getData();
     result.fold((l) {
       emit(MovieWatchlistError(l.message));
     }, (r) {
-      emit(MovieWatchlistLoading());
-      getData.fold((l) {
-        emit(MovieWatchlistError(l.message));
-      }, (r) {
-        emit(MovieWatchlistLoaded(r));
-      });
+      emit(MovieWatchlistSuccessRemoved(r));
     });
-  }
-
-  Future<Either<Failure, List<Movie>>> _getData() async {
-    final result = await _watchListsMovie.getData();
-    return result;
   }
 }

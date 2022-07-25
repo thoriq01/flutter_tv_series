@@ -12,6 +12,7 @@ class MovieRecomendationBloc extends Bloc<MovieRecomendationEvent, MovieRecomend
     on<LoadMovieRecomendation>(_loadMovieRecomendation);
   }
   _loadMovieRecomendation(LoadMovieRecomendation event, Emitter<MovieRecomendationState> emit) async {
+    emit(MovieRecomendationInitial());
     emit(MovieRecomendationLoading());
     final result = await getRecomendation.execute(event.movieId);
     result.fold((l) => emit(MovieRecomendationError(l.toString())), (r) => emit(MovieRecomendationLoaded(r)));

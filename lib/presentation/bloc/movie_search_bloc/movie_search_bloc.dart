@@ -13,11 +13,11 @@ class MovieSearchBloc extends Bloc<MovieSearchBlocEvent, MovieSearchBlocState> {
     on<SearchMovieEvent>(_loadMovieSearch);
     on<RemoveSearchMovieEvent>(_emptySearch);
   }
-  _loadMovieSearch(MovieSearchBlocEvent event, Emitter<MovieSearchBlocState> emit) async {
-    var find = event as SearchMovieEvent;
+  _loadMovieSearch(SearchMovieEvent event, Emitter<MovieSearchBlocState> emit) async {
+    emit(MovieSearchBlocInitial());
     emit(MovieSearchBlocLoading());
 
-    final result = await _searchMovie.execute(find.query);
+    final result = await _searchMovie.execute(event.query);
     result.fold((l) {
       emit(MovieSearchBlocError(l.message));
     }, (r) {
@@ -25,7 +25,7 @@ class MovieSearchBloc extends Bloc<MovieSearchBlocEvent, MovieSearchBlocState> {
     });
   }
 
-  _emptySearch(MovieSearchBlocEvent event, Emitter<MovieSearchBlocState> emit) async {
+  _emptySearch(RemoveSearchMovieEvent event, Emitter<MovieSearchBlocState> emit) async {
     emit(MovieSearchBlocEmpty());
   }
 }

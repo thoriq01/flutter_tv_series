@@ -34,12 +34,12 @@ class Movie extends Equatable {
         posterPath: movie.posterPath,
         releaseDate: movie.releaseDate,
         title: movie.title,
-        voteAverage: 0,
-        voteCount: 0,
-        popularity: 0,
+        voteAverage: movie.voteAverage,
+        voteCount: movie.voteCount,
+        popularity: 60.441,
         video: false,
       );
-  MovieDetail movie() {
+  movie() {
     return MovieDetail(
       adult: false,
       backdropPath: backdropPath,

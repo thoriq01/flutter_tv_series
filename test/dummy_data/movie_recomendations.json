@@ -1,0 +1,26 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": null,
+            "id": 800309,
+            "title": "Bon Bini Holland 3",
+            "original_language": "nl",
+            "original_title": "Bon Bini Holland 3",
+            "overview": "Robertico and the FC Kip squad are ready for some new and even more hilarious adventures.",
+            "poster_path": "/rztsYdABT866DGKVlDNFWhQbEZG.jpg",
+            "media_type": "movie",
+            "genre_ids": [
+                35
+            ],
+            "popularity": 2.764,
+            "release_date": "2022-06-30",
+            "video": false,
+            "vote_average": 0.0,
+            "vote_count": 0
+        }
+    ],
+    "total_pages": 2,
+    "total_results": 40
+}

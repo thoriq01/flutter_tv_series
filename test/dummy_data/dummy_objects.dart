@@ -25,7 +25,7 @@ final testMovieList = [testMovie];
 final testMovieDetail = MovieDetail(
   adult: false,
   backdropPath: 'backdropPath',
-  genres: [Genre(id: 1, name: 'Action')],
+  genres: [],
   id: 1,
   originalTitle: 'originalTitle',
   overview: 'overview',

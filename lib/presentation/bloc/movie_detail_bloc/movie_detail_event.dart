@@ -15,3 +15,5 @@ class LoadMovieDetail extends MovieDetailEvent {
   @override
   List<Object> get props => [id];
 }
+
+class TestMovieDetail extends MovieDetailEvent {}

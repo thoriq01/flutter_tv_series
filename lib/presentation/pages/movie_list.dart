@@ -7,6 +7,10 @@ import 'package:dicoding_tv_series/presentation/bloc/movie_search_bloc/movie_sea
 import 'package:dicoding_tv_series/presentation/bloc/movie_top_rated_bloc/movie_top_rated_bloc.dart';
 import 'package:dicoding_tv_series/presentation/bloc/movie_watchlist_bloc/movie_wathclist_bloc.dart';
 import 'package:dicoding_tv_series/presentation/widget/movie_card.dart';
+import 'package:dicoding_tv_series/presentation/widget/movie_now_playing_widget.dart';
+import 'package:dicoding_tv_series/presentation/widget/movie_popular_widget.dart';
+import 'package:dicoding_tv_series/presentation/widget/movie_toprated_widget.dart';
+import 'package:dicoding_tv_series/presentation/widget/movie_watchlist_widget.dart';
 import 'package:dicoding_tv_series/presentation/widget/title_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -145,125 +149,27 @@ class _MovieListPageState extends State<MovieListPage> {
                   } else if (state is MovieSearchBlocEmpty) {
                     return Column(
                       children: [
-                        BlocConsumer<MovieWathclistBloc, MovieWathclistState>(
-                          listener: (context, state) {},
-                          builder: (context, state) {
-                            if (state is MovieWatchlistLoading) {
-                              return Container();
-                            } else if (state is MovieWatchlistError) {
-                              return Center(
-                                child: Text(state.message),
-                              );
-                            } else if (state is MovieWatchlistLoaded) {
-                              if (state.movies.length > 0) {
-                                return Container(
-                                  child: Column(
-                                    children: [
-                                      TitleContent(
-                                          text: "Watchlist",
-                                          onPressed: () {
-                                            Navigator.pushNamed(context, movieTypeListPage, arguments: ListTypeMovieArgument("watchlist"));
-                                          }),
-                                      MovieListCard(
-                                        length: state.movies.length,
-                                        isWatchlist: true,
-                                        isScrollable: true,
-                                        height: 300,
-                                        movies: state.movies,
-                                        direction: Axis.horizontal,
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              } else {
-                                return Container();
-                              }
-                            } else {
-                              return Container();
-                            }
-                          },
-                        ),
+                        MovieWatchlistWidget(),
                         TitleContent(
                           text: "Now Playing",
                           onPressed: () {
                             Navigator.pushNamed(context, movieTypeListPage, arguments: ListTypeMovieArgument("nowplaying"));
                           },
                         ),
-                        BlocBuilder<MovieNowPlayingBloc, MovieNowPlayingState>(
-                          builder: (context, state) {
-                            if (state is MovienowPlayingLoading) {
-                              return Container();
-                            } else if (state is MovieNowPlayingError) {
-                              return Center(
-                                child: Text(state.message),
-                              );
-                            } else if (state is MovieNowPlayingLoaded) {
-                              if (state.movies.length > 0) {
-                                return MovieListCard(
-                                  length: 2,
-                                  isWatchlist: false,
-                                  height: 500,
-                                  movies: state.movies,
-                                  isScrollable: false,
-                                  direction: Axis.vertical,
-                                );
-                              } else {
-                                return Container();
-                              }
-                            } else {
-                              return Container();
-                            }
-                          },
-                        ),
+                        MovieNowPlayingWidget(),
                         TitleContent(
                           text: "Popular",
                           onPressed: () {
                             Navigator.pushNamed(context, movieTypeListPage, arguments: ListTypeMovieArgument("popular"));
                           },
                         ),
-                        BlocBuilder<MoviePopularBlocBloc, MoviePopularBlocState>(builder: (context, state) {
-                          if (state is MoviePopularLoaded) {
-                            return MovieListCard(
-                              length: 2,
-                              height: 500,
-                              isWatchlist: false,
-                              movies: state.movies,
-                              direction: Axis.vertical,
-                            );
-                          } else if (state is MoviePopularError) {
-                            return Center(
-                              child: Text(state.message),
-                            );
-                          } else {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        }),
+                        MoviePopularBlocWidget(),
                         TitleContent(
                             text: "Top Movie",
                             onPressed: () {
                               Navigator.pushNamed(context, movieTypeListPage, arguments: ListTypeMovieArgument("topmovie"));
                             }),
-                        BlocBuilder<MovieTopRatedBloc, MovieTopRatedState>(builder: (context, state) {
-                          if (state is MovieTopRatedLoaded) {
-                            return MovieListCard(
-                              length: 2,
-                              height: 500,
-                              isWatchlist: false,
-                              movies: state.movies,
-                              direction: Axis.vertical,
-                            );
-                          } else if (state is MovieTopRatedError) {
-                            return Center(
-                              child: Text(state.message),
-                            );
-                          } else {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        }),
+                        MovieTopRatedWidget(),
                       ],
                     );
                   } else {

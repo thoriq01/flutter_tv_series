@@ -4,7 +4,9 @@ abstract class MovieRecomendationEvent extends Equatable {
   const MovieRecomendationEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        LoadMovieRecomendation,
+      ];
 }
 
 class LoadMovieRecomendation extends MovieRecomendationEvent {
